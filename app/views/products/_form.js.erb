@@ -1,0 +1,108 @@
+
+$("#product_cost_price").on('keyup', function(){
+
+  //  if discount is entered first then cost price must be greater than or equal to discount
+//  if ($("#product_discount").val()) {
+//    if (parseFloat($(this).val()) < parseFloat($("#product_discount").val())) {
+//      $("#product_cost_price").val($("#product_discount").val())
+//    }
+//  }
+
+  $("#product_discount").val("")
+
+  calculate_total_price(this)
+})
+
+$("#product_discount").on('keyup', function(){
+
+  //  if product_cost is entered first then cost price must be greater than or equal to discount
+  if ($("#product_cost_price").val()){
+    if ( parseFloat($("#product_cost_price").val()) < parseFloat($(this).val())){
+      $("#product_discount").val($("#product_cost_price").val())
+    }
+  }
+  else {
+    $("#product_discount").val("")
+  }
+  calculate_total_price(this)
+})
+
+$("#product_gst").on("change", function(){
+  calculate_total_price(this)
+})
+
+
+function calculate_total_price(_this) {
+  var cost_price = parseFloat($('#product_cost_price').val())
+  var discount = parseFloat($("#product_discount").val()) || 0
+  var gst = parseFloat($("#product_gst").val())
+
+
+  if (cost_price > 0){
+
+    var gst_cost = ((cost_price - discount) * gst)/100
+
+    var total_amount = gst_cost + (cost_price - discount)
+
+    $("#product_total_price").val(total_amount)
+
+  } else {
+    $("#product_total_price").val("")
+  }
+
+
+  if (inclusive) {
+    var taxable_amount = (amount * tax_rate) / (100 + tax_rate)
+//    var non_taxable_amount = amount - taxable_amount
+//    var total_amount = amount
+  } else {
+    var taxable_amount = (amount * tax_rate) / 100
+//    var non_taxable_amount = amount
+//    var total_amount = amount + taxable_amount
+  }
+  $('#finance_expense_tax_amount').val(taxable_amount.toFixed(2))
+  //$(this_parent).find('.item_non_taxable_amount').val(non_taxable_amount.toFixed(2))
+  //$(this_parent).find('.item_total_price').val(total_amount.toFixed(2))
+//  $('.tax_group').attr('data-amount', amount)
+  $('.finance_expense_tax').val(tax_rate)
+
+}
+
+
+
+validate_product_form()
+function validate_product_form() {
+  $("#product_form").validate({
+    rules: {
+      "product[name]": {
+        required: true,
+      },
+      "product[cost_price]": {
+        required: true,
+        number: true,
+      },
+      "product[gst]": {
+        required: true,
+        number: true,
+      },
+      "product[total_price]": {
+        required: true,
+        number: true,
+      },
+    },
+    messages: {
+      "product[name]": {
+        required: "This field is required"
+      },
+      "product[cost_price]": {
+        required: "This field is required"
+      },
+      "product[gst]": {
+        required: "Please select GST"
+      },
+      "product[total_price]": {
+        required: "This field is required"
+      },
+    },
+  })
+}

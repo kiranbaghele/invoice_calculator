@@ -1,0 +1,70 @@
+<div class="modal-dialog expense-form-dialog" style="width: 750px" xmlns="http://www.w3.org/1999/html">
+  <div class="modal-content">
+
+    <%= form_for(@product,:html=>{:id=>'product_form'}, :remote=>true) do |f| %>
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"> Product</h4>
+        </div>
+        <div class="modal-body row">
+
+          <table class="table-container" style="width: 100%">
+            <tr>
+              <td>
+                <div class="form-group row col-md-12">
+                  <div class="col-sm-4"><%= f.label :name%></div>
+                  <div class="col-sm-8"><%= f.text_field :name, :class => 'form-control'%></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="form-group row col-md-12">
+                  <div class="col-sm-4"><%= f.label :cost_price, "Cost Price (Rs)"%></div>
+                  <div class="col-sm-8"><%= f.text_field :cost_price, :class => 'form-control'%></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="form-group row col-md-12">
+                  <div class="col-sm-4"><%= f.label :discount, "Discount (Rs)" %></div>
+                  <div class="col-sm-8"><%= f.text_field :discount, :class => 'form-control'%></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="form-group row col-md-12">
+                  <div class="col-sm-4"><%= f.label :gst, "GST(%)"%></div>
+                  <div class="col-sm-8"><%= f.select(:gst, [5,12,18,28], {}, :class => 'form-control')%></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="form-group row col-md-12">
+                  <div class="col-sm-4"><%= f.label :total_price, "Total Price"%></div>
+                  <div class="col-sm-8"><%= f.text_field :total_price, :class => 'form-control', :readonly => true%></div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="modal-footer">
+
+
+          <% if params[:action] == "new" %>
+              <%= f.submit "Save",{:class => 'btn btn-success',:onclick => 'validate_product_form()'}%>
+          <%else%>
+              <%= f.submit "Update",{:class => 'btn btn-success',:onclick => 'validate_product_form()'}%>
+          <%end%>
+
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+    <%end%>
+
+  </div>
+</div>

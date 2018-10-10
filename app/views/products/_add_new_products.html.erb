@@ -1,0 +1,14 @@
+<tr id="add_product" class="products-row">
+  <td style="width: 20%">
+    <%= select_tag "invoice[invoice_product_attributes][#{@counter}][product_id]",options_for_select(@products.pluck(:name, :id)), { :class => 'products-id form-control', :include_blank => "Select"} %>
+    <p3 class="row-destroy"> <%= hidden_field_tag "recipe[invoice_product_attributes][#{@counter}][_destroy]", nil, { :class => '' } %> </p3>
+    <%= hidden_field_tag "invoice[invoice_product_attributes][#{@counter}][name]", nil, { :readonly => true, :class => 'name form-control'}%>
+  </td>
+
+  <td><%= text_field_tag "invoice[invoice_product_attributes][#{@counter}][cost_price]", nil, {:readonly => true, :class => 'cost_price form-control'} %></td>
+  <td><%= text_field_tag "invoice[invoice_product_attributes][#{@counter}][discount]", nil, {:readonly => true, :class => 'discount form-control'} %></td>
+  <td><%= text_field_tag "invoice[invoice_product_attributes][#{@counter}][gst]", nil, {:readonly => true, :class => 'gst form-control'} %></td>
+  <td><%= text_field_tag "invoice[invoice_product_attributes][#{@counter}][total_price]", "0", {:readonly => true, :class => 'total_price form-control'} %></td>
+  <td class="remove-row btn btn-xs btn-danger" style="margin: 7px;">remove</td>
+
+</tr>

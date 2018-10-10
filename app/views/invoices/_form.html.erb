@@ -1,0 +1,78 @@
+<div class="modal-dialog expense-form-dialog" style="width: 950px" xmlns="http://www.w3.org/1999/html">
+  <div class="modal-content">
+
+    <%= form_for(@invoice,:html=>{:id=>'invoice_form'}, :remote=>true) do |f| %>
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"> Invoice</h4>
+        </div>
+        <div class="modal-body row">
+
+          <strong style="color:black;" >Add Product</strong>
+
+          <div class="add-product">
+            <table id="invoice_product_table" class="table" >
+              <thead style="color:black;">
+                <tr class="header">
+                  <th>Name</th>
+                  <th>Cost Price</th>
+                  <th>Discount</th>
+                  <th>GST</th>
+                  <th>Total Price</th>
+                  <!--<th>Quantity</th>-->
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody class="table-invoice-body">
+              <%= f.fields_for :invoice_product, html: { multipart: true } do |i|%>
+                  <tr id="add_product" class="products-row">
+                    <td style="width: 20%;">
+
+                      <%= i.select(:product_id, @products.pluck(:name, :id), {include_blank: "Select"}, {class: "products-id form-control"} ) %>
+                      <p3 class="row-destroy"><%= i.hidden_field :_destroy%></p3>
+                      <p4 class="product-name-row"><%= i.hidden_field :name, :class => 'name form-control'%></p4>
+                    </td>
+                    <td><%= i.text_field :cost_price, :readonly => true, :class => 'cost_price form-control'%></td>
+                    <td><%= i.text_field :discount, :readonly => true, :class => 'discount form-control'%></td>
+                    <td><%= i.text_field :gst, :readonly => true, :class => 'gst form-control'%></td>
+                    <td><%= i.text_field :total_price, :readonly => true, :class => ' total_price form-control'%></td>
+                    <td class="remove-row btn btn-xs btn-danger" style="margin: 7px;">remove</td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+            <div id="add_row" class="add-row btn btn-xs btn-success pull-right" style="margin: 20px;" >Add</div>
+          </div>
+
+
+          <hr style="margin: 50px;">
+
+          <div class="form-group row col-md-12">
+            <div class="col-sm-2"><%= f.label :mop, "MOP"%></div>
+            <div class="col-sm-4"><%= f.select(:mop, ["cash","card"], {}, :class => 'form-control')%></div>
+
+            <div class="col-sm-2"><%= f.label :amount, "Amount"%></div>
+            <div class="col-sm-4"><%= f.text_field :amount, :readonly => true, :class => 'form-control'%></div>
+          </div>
+
+
+
+
+        </div>
+
+        <div class="modal-footer">
+
+
+          <% if params[:action] == "new" %>
+              <%= f.submit "Save",{:class => 'btn btn-success',:onclick => 'validate_invoice_form()'}%>
+          <%else%>
+              <%= f.submit "Update",{:class => 'btn btn-success',:onclick => 'validate_invoice_form()'}%>
+          <%end%>
+
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+    <%end%>
+
+  </div>
+</div>

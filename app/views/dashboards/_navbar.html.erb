@@ -1,0 +1,15 @@
+<nav class="navbar navbar-default navbar-fixed-top" style="background-color:#fff; height:40px;">
+  <div class="container-fluid">
+    <div class="navbar-header" style="margin-top: 12px">
+      <%= link_to "/dashboards", :class=>"dashboard-home" do %>Home <%end%>
+    </div>
+    <ul class="nav navbar-nav navbar-main" style="margin-top: -3px; margin-left: 12px; border-left: 1px solid #ccc;">
+      <li><a href="#" class="invoices-page" ><i class="fa fa-caret-right"></i>WELCOME TO INVOICE CALCULATOR</a></li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right" style="margin-top: -3px; margin-left: 12px; border-left: 1px solid #ccc;">
+      <li><a href="/invoices" class="invoices-page" ><i class="fa fa-caret-right"></i> Invoices</a></li>
+      <li><a href="/products" class="products-page" ><i class="fa fa-caret-right"></i> Products</a></li>
+    </ul>
+  </div>
+</nav>

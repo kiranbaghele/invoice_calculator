@@ -1,0 +1,38 @@
+
+<%= link_to new_invoice_path, class: "btn btn-xs btn-success add-invoice-btn", id: "add-invoice-btn", data: {remote: true, 'toggle': "modal", 'target': '#invoice-modal' } do %> Add invoice<% end %>
+
+<div id="invoice-modal" class="modal invoice-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static"></div>
+
+
+
+<div class="container">
+  <table id="invoices_table" class="table table-bordered" >
+    <thead>
+    <tr class="header">
+      <th>Invoice Id</th>
+      <th>MOP</th>
+      <th>Amount</th>
+      <th colspan="2"><center>Action</center></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @invoices.each do |i| %>
+        <tr>
+          <td><%= i.invoice_id %></td>
+          <td><%= i.mop %></td>
+          <td><%= i.amount %></td>
+
+          <td><%= link_to edit_invoice_path(i.id), class: "btn btn-xs btn-warning edit-invoice-btn", id: "edit-invoice-btn", data: {remote: true, 'toggle': "modal", 'target': '#invoice-modal' } do %> Edit<% end %></td>
+
+          <td><%= link_to :Delete, invoice_path(i.id), method: "delete", class: "btn btn-xs btn-danger" %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .add-invoice-btn{
+    margin: 15px;
+  }
+</style>

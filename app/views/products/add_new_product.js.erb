@@ -1,0 +1,52 @@
+$(".add-product").find("tbody").last().append(("<%= escape_javascript(render(:partial => "add_new_products.html")) %>"))
+
+
+$('.remove-row').on('click', function(){
+
+  var parent_row = $(this).parents(".products-row")
+
+  var destroy_field = parent_row.find(".row-destroy").find("input")
+
+  destroy_field.val("true")
+
+  parent_row.hide();
+
+  parent_row.find(".total_price").val("0")
+
+  calculate_invoice_amount()
+});
+
+$(".products-id").on("change", function(){
+
+  if ($(this).val()){
+    var _this = this
+    $.ajax({
+
+      dataType: "json",
+      type: "get",
+      data: {id: $(this).val(), remote: "true"},
+      url: "/products/get_data",
+
+      success: function(result){
+        // var ing_row = ing_id.find(".ingt-row").find("input")
+        $(_this).parents(".products-row").find(".name").val(result[0])
+        $(_this).parents(".products-row").find(".cost_price").val(result[1])
+        $(_this).parents(".products-row").find(".gst").val(result[2])
+        $(_this).parents(".products-row").find(".total_price").val(result[3])
+        $(_this).parents(".products-row").find(".discount").val(result[4])
+        calculate_invoice_amount(_this)
+      }
+    })
+
+  }
+})
+
+
+function calculate_invoice_amount(_this){
+  var breakup_amount = $(".total_price")
+  var sum_breakup_amount = 0
+  for (var i = breakup_amount.length - 1; i >= 0; i--) {
+    sum_breakup_amount = sum_breakup_amount + parseFloat($(breakup_amount[i]).val())
+  }
+  $("#invoice_amount").val(sum_breakup_amount)
+}
